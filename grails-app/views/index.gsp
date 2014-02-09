@@ -6,7 +6,7 @@
 	</head>
 	<body>
 	    <!-- Page Content -->
-	    <div class="container">
+	    <div class="container" id="containerDiv">
 	        <div class="row">
 	        	<div id="menuDiv">
 					<g:render template="/shared/menu" />

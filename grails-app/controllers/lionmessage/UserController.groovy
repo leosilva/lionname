@@ -50,7 +50,33 @@ class UserController {
         } else {
         	render status: 500, text: g.message(code: 'default.registry.updated.error')
         }
+	}
+	
+	def createAccount() {
+		def user = new User();
+		render view: 'createAccount', model: [user: user]
+	}
+	
+	def save() {
+		def json = JSON.parse(params.json)
+		def user = new User(json)
 
+		if (user.save(flush: true)) {
+			def link = g.createLink(action: 'preLogin')
+			def message = "${message(code: 'default.registry.created.success')}. ${message(code: 'default.create.account.success', args: [link])}"
+			render message
+		} else {
+			render status: 500, text: g.message(code: 'default.registry.created.error')
+		}
+	}
+	
+	def verifyUniqueLionname() {
+		def user = User.findByLionname(params.lionname)
+		if (user) {
+			render status: 500, text: g.message(code: 'user.lionname.exists')
+		} else {
+			render status: 200
+		}
 	}
 	
 }

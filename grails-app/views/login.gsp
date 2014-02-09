@@ -2,7 +2,6 @@
 <html>
 	<head>
 		<meta name="layout" content="main"/>
-		<title><g:message code="default.title.login" /></title>
 		<script>
 			$(document).ready(function() {
 				$('#submitButton').click(function() {
@@ -46,7 +45,7 @@
 							<div class="form-group">
 								<div class="col-sm-offset-4 col-sm-10">
 									<button type="button" class="btn btn-primary" id="submitButton"><g:message code="default.login.label" /></button>
-									<button type="button" class="btn btn-default"><g:message code="default.button.create.account.label" /></button>
+									<g:link controller="user" action="createAccount" class="btn btn-link"><g:message code="default.title.create.account" /></g:link>
 								</div>
 							</div>
 						</div>
