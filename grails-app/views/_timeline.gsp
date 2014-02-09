@@ -31,9 +31,6 @@
 			<g:if test="${session.user}">
 				<!--<g:if test="${session?.user?.username != post?.author?.username}"></g:if> -->
 				<g:if test="${true}">
-				<a href="#" tooltip="true" data-toggle="tooltip" data-placement="bottom"
-					title="${message(code: 'default.unfollow.parameterized.message.label', args: ['Maria José']) }">
-				<i class="fa fa-arrow-down"></i></a>
 					<a href="#" tooltip="true" data-toggle="tooltip" data-placement="bottom"
 						title="${message(code: 'default.repost.label') }">
 					<i class="fa fa-repeat"></i></a>
