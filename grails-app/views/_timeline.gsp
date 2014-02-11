@@ -1,7 +1,10 @@
 <div class="col-md-9 col-sm-8">
-	<h1 class="page-header">
+	<g:if test="${session.user}">
+		<g:render template="/post/write"/>
+	</g:if>
+	<h4>
 		<g:message code="default.timeline.label" />
-	</h1>
+	</h4>
 	<div id="timelinePosts">
 		<hr>
 		<p>

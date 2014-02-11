@@ -16,6 +16,7 @@
 		<g:javascript src="jquery.serializeJSON.js"/>
 		<g:javascript src="jquery.limit-1.2.source.js"/>
 		<g:javascript src="jquery.bootstrap.growl.js"/>
+		<g:javascript src="jquery.autosize.js"/>
 		<g:javascript src="lionmessage.js"/>
 		<g:layoutHead/>
 	</head>
