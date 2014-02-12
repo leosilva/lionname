@@ -12,17 +12,19 @@
 				</div>
 			</div>
 			<div class="clearfix"></div>
-			<div class="form-group">
+			<div class="form-group has-feedback">
 				<label for="username" class="col-sm-4 control-label"><g:message code="default.username.label" /></label>
 				<div class="col-lg-3">
 					<g:textField name="username" class="form-control" value="${user?.username}" required="" />
+					<span class="glyphicon form-control-feedback hidden"></span>
 				</div>
 			</div>
 			<div class="clearfix"></div>
-			<div class="form-group">
+			<div class="form-group has-feedback">
 				<label for="password" class="col-sm-4 control-label"><g:message code="default.password.label" /></label>
 				<div class="col-lg-3">
 					<input type="password"	name="password" class="form-control" id="password" value="${user?.password}" required>
+					<span class="glyphicon form-control-feedback hidden"></span>
 				</div>
 			</div>
 			<div class="clearfix"></div>
@@ -36,24 +38,32 @@
 	</form>
 </div>
 <script>
+
+	preValidateRequiredFields('editForm');
+
 	$('#cancelButton').click(function() {
 		goToPage("${createLink(uri:'/')}");
 	});
 
 	$('#submitButton').click(function() {
-		var json = JSON.stringify($('#editForm').serializeJSON());
-		var dados = {'json': json};
-		$.ajax({
-	        url: "${createLink(controller: 'user', action: 'edit')}",
-	        type: "POST",
-	        data : dados,
-	        success: function(data) {
-        		$('#headerDiv').html(data.headerPage);
-        		showMessage(data.message, 'success');
-	        },
-	        error: function(data) {
-		        showMessage(data.responseText, 'danger');
-		    }
-	    });
+
+		var isValid = validateRequiredFields('editForm');
+
+		if (isValid) {
+			var json = JSON.stringify($('#editForm').serializeJSON());
+			var dados = {'json': json};
+			$.ajax({
+		        url: "${createLink(controller: 'user', action: 'edit')}",
+		        type: "POST",
+		        data : dados,
+		        success: function(data) {
+	        		$('#headerDiv').html(data.headerPage);
+	        		showMessage(data.message, 'success');
+		        },
+		        error: function(data) {
+			        showMessage(data.responseText, 'danger');
+			    }
+		    });
+		}
     });
 </script>

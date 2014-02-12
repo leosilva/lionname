@@ -17,10 +17,20 @@ class UserController {
 				session.user = user
 				render status: 200, text: g.message(code: 'login.success.message')
 			} else {
-				render status: 500, text: g.message(code: 'wrong.password.message') 
+				def jsonBuilder = new JsonBuilder()
+				def returnJson = jsonBuilder {
+					message g.message(code: 'wrong.password.message')
+					field json.keys()[1]
+				}
+				render status: 500, text: (returnJson as JSON)
 			}
 		} else {
-			render status: 500, text: g.message(code: 'user.not.found.message')
+			def jsonBuilder = new JsonBuilder()
+			def returnJson = jsonBuilder {
+				message g.message(code: 'user.not.found.message')
+				field json.keys()[0]
+			}
+			render status: 500, text: (returnJson as JSON)
 		}
 	}
 	
@@ -73,7 +83,7 @@ class UserController {
 	def verifyUniqueLionname() {
 		def user = User.findByLionname(params.lionname)
 		if (user) {
-			render status: 500, text: g.message(code: 'user.lionname.exists')
+			render status: 500, text: g.message(code: 'user.lionname.exists', args: [params.lionname])
 		} else {
 			render status: 200
 		}

@@ -4,6 +4,9 @@
 		<meta name="layout" content="main"/>
 		<script>
 			$(document).ready(function() {
+
+				preValidateRequiredFields('createAccountForm');
+				
 				$('#lionname').change(function() {
 					var dados = {'lionname': $('#lionname').val()};
 					$.ajax({
@@ -11,38 +14,36 @@
 				        type: "POST",
 				        data : dados,
 				        success: function(data) {
-				        	$('#lionnameDiv').removeClass('has-error');
-				    		$('#lionnameDiv').addClass('has-success');
-				    		$('#lionnameDiv').children().last().children().last().addClass('glyphicon-ok');
-				    		$('#lionnameDiv').children().last().children().last().removeClass('glyphicon-remove');
-				    		$('#lionnameDiv').children().last().children().last().removeClass('hidden');
+				        	markInput('lionname', 'success');
 				        },
 				        error: function(data) {
 					        showMessage(data.responseText, 'danger');
-					        $('#lionnameDiv').removeClass('has-success');
-					        $('#lionnameDiv').children().last().children().last().addClass('glyphicon-remove');
-				    		$('#lionnameDiv').children().last().children().last().removeClass('glyphicon-ok');
-				    		$('#lionnameDiv').children().last().children().last().removeClass('hidden');
-					        $('#lionnameDiv').addClass('has-error');
+					        markInput('lionname', 'error');
+					        $('#lionname').val('');
 					    }
 				    });
 			    });
 				
 				$('#submitButton').click(function() {
-					var json = JSON.stringify($('#createAccountForm').serializeJSON());
-					var dados = {'json': json};
-					$.ajax({
-				        url: "${createLink(controller: 'user', action: 'save')}",
-				        type: "POST",
-				        data : dados,
-				        success: function(data) {
-					        $('#createAccountForm').children().first().attr("disabled", "true");
-				        	showMessage(data, 'success');
-				        },
-				        error: function(data) {
-					        showMessage(data.responseText, 'danger');
-					    }
-				    });
+
+					var isValid = validateRequiredFields('createAccountForm');
+
+					if (isValid) {
+						var json = JSON.stringify($('#createAccountForm').serializeJSON());
+						var dados = {'json': json};
+						$.ajax({
+					        url: "${createLink(controller: 'user', action: 'save')}",
+					        type: "POST",
+					        data : dados,
+					        success: function(data) {
+						        $('#createAccountForm').children().first().attr("disabled", "true");
+					        	showMessage(data, 'success');
+					        },
+					        error: function(data) {
+						        showMessage(data.responseText, 'danger');
+						    }
+					    });
+					}
 			    });
 
 				$('#cancelButton').click(function() {
@@ -62,25 +63,27 @@
 								<label for="lionname" class="col-sm-4 control-label"><g:message code="default.lionname.label" /></label>
 								<div class="col-lg-3">
 									<input type="text" name="lionname" class="form-control" id="lionname" value="${user.lionname}" required="true">
-									<span class="glyphicon form-control-feedback hidden" id="spanLionnameFeedback"></span>
+									<span class="glyphicon form-control-feedback hidden"></span>
 								</div>
 							</div>
 							<div class="clearfix"></div>
-							<div class="form-group">
+							<div class="form-group has-feedback">
 								<label for="username" class="col-sm-4 control-label"><g:message code="default.username.label" /></label>
 								<div class="col-lg-3">
 									<g:textField name="username" class="form-control" value="${user.password}" required="true" />
+									<span class="glyphicon form-control-feedback hidden"></span>
 								</div>
 							</div>
 							<div class="clearfix"></div>
-							<div class="form-group">
+							<div class="form-group has-feedback">
 								<label for="password" class="col-sm-4 control-label"><g:message code="default.password.label" /></label>
 								<div class="col-lg-3">
 									<input type="password"	name="password" class="form-control" id="password" value="${user.password}" required="true">
+									<span class="glyphicon form-control-feedback hidden"></span>
 								</div>
 							</div>
 							<div class="clearfix"></div>
-							<div class="form-group">
+							<div class="form-group has-feedback">
 								<div class="col-sm-offset-4 col-sm-10">
 									<button type="button" class="btn btn-primary" id="submitButton"><g:message code="default.ok.label" /></button>
 									<button type="button" class="btn btn-default" id="cancelButton"><g:message code="default.button.cancel.label" /></button>

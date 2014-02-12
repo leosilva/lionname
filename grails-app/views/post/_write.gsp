@@ -1,3 +1,18 @@
+<script>
+	$(document).ready(function() {
+		$('#message').focus(function() {
+			$('#message').autosize({append: "\n"});
+			$('form .hidden').removeClass('hidden');
+		});
+		$('#message').blur(function() {
+			$('#message').trigger('autosize.destroy');
+			$('#message').val('');
+			$('form small').addClass('hidden');
+			$('form .col-lg-4').addClass('hidden');
+		});
+		$('#message').limit('140','#charsLeft');
+	});
+</script>
 <form role="form" class="form-vertical" id="postForm" style="margin-top: 40px;">
 	<div class="row">
 		<div class="form-group col-lg-6">
@@ -9,16 +24,3 @@
 		</div>
 	</div>
 </form>
-<script>
-	$('#message').focus(function() {
-		$('#message').autosize({append: "\n"});
-		$('form .hidden').removeClass('hidden');
-	});
-	$('#message').blur(function() {
-		$('#message').trigger('autosize.destroy');
-		$('#message').val('');
-		$('form small').addClass('hidden');
-		$('form .col-lg-4').addClass('hidden');
-	});
-	$('#message').limit('140','#charsLeft');
-</script>

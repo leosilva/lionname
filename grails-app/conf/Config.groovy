@@ -97,4 +97,13 @@ grails.resources.modules = {
 		resource url:'js/bootstrap.js'
 		resource url:'js/modern-business.js'
 	}
+	
+	'jquery-plugins' {
+		resource url:'js/jquery.serializeJSON.js'
+		resource url:'js/jquery.limit-1.2.source.js'
+		resource url:'js/jquery.bootstrap.growl.js'
+		resource url:'js/jquery.autosize.js'
+		resource url:'js/jquery.validate.js'
+	}
+	
 }

@@ -12,11 +12,8 @@
 		<link rel="stylesheet" href="${resource(dir: 'font-awesome/css/', file: 'font-awesome.min.css')}" type="text/css">
 		<g:javascript library="jquery"/>
 		<r:require modules="bootstrap"/>
+		<r:require module="jquery-plugins"/>
 		<r:layoutResources />
-		<g:javascript src="jquery.serializeJSON.js"/>
-		<g:javascript src="jquery.limit-1.2.source.js"/>
-		<g:javascript src="jquery.bootstrap.growl.js"/>
-		<g:javascript src="jquery.autosize.js"/>
 		<g:javascript src="lionmessage.js"/>
 		<g:layoutHead/>
 	</head>

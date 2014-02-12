@@ -22,11 +22,53 @@ function goToPage(newLocation) {
  */
 function showMessage(message, type) {
 	$.bootstrapGrowl(message, {
-		  type: type, // (null, 'info', 'error', 'success')
+		  type: type,
 		  offset: {from: 'top', amount: 70}, // 'top', or 'bottom'
 		  width: 'auto', // (integer, or 'auto')
 		  delay: 3000,
 		  allow_dismiss: true,
 		  stackup_spacing: 10 // spacing between consecutively stacked growls.
 		});
+}
+
+/**
+ * Função que supervisiona o formulário, validando campos obrigatórios.
+ * @param formId
+ */
+function preValidateRequiredFields(formId) {
+	var validator = $('#' + formId).validate({
+		showErrors: function(errorMap, errorList) {
+			$.each(errorMap, function(i, item) {
+				markInput(i, 'error');
+			})
+			$.each(validator.successList, function(i, item) {
+				markInput(item.id, 'success');
+			});
+		}
+	});
+}
+
+/**
+ * Funcão que retorna true ou false informando se o formulário é válido, quanto aos elementos obrigatórios.
+ * @param formId
+ * @returns true ou false
+ */
+function validateRequiredFields(formId) {
+	return $('#' + formId).valid();
+}
+
+function markInput(inputId, type) {
+	if (type == 'success') {
+		$('#' + inputId).parent().parent().removeClass('has-error');
+		$('#' + inputId).siblings().first().removeClass('glyphicon-remove');
+		$('#' + inputId).parent().parent().addClass('has-success');
+		$('#' + inputId).siblings().first().addClass('glyphicon-ok');
+		$('#' + inputId).siblings().first().removeClass('hidden');
+	} else if (type == 'error') {
+		$('#' + inputId).siblings().first().removeClass('glyphicon-ok');
+		$('#' + inputId).parent().parent().removeClass('has-success');
+		$('#' + inputId).parent().parent().addClass('has-error');
+		$('#' + inputId).siblings().first().addClass('glyphicon-remove');
+		$('#' + inputId).siblings().first().removeClass('hidden');
+	}
 }
